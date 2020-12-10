@@ -1,13 +1,19 @@
 const router = require("express").Router();
 const sql = require("mssql");
+const Meter = require("../model/meter");
+require("dotenv").config();
 const auth = require("../middleware/auth");
 
 // config for your database
 const Config = {
-  user: "sa",
-  password: "mindmill",
-  server: "114.69.249.205\\sql2017",
-  database: "READyManagerDB",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_SERVER,
+  database: process.env.DB_SQL,
+  options: {
+    encrypt: true,
+    enableArithAbort: true,
+  },
 };
 
 //route
@@ -17,11 +23,18 @@ router.get("/:id", auth, function (req, res) {
     try {
       await sql.connect(confrigration);
       const request = new sql.Request();
-      const recordsets = await request
+      const recordset = await request
         .input("ID", sql.VarChar(50), req.params.id)
         .execute(procedureName);
-      res.send(recordsets);
-      console.log(req.params.id);
+      let meterDataToSend = new Meter(
+        recordset[0].ID,
+        recordset[0].Href,
+        recordset[0].SerialNumber,
+        recordset[0].Manufacture,
+        recordset[0].MeterType
+      );
+
+      res.json({ meterDataToSend });
     } catch (error) {
       console.log(error);
     }

@@ -1,40 +1,19 @@
-import Schema from "validate";
+function MeterModel(
+  id = null,
+  href = null,
+  serialNumber = null,
+  manufacturer = null,
+  meterType = null
+) {
+  // let meterData= {}
+  this.id = id;
+  this.href = href;
+  this.serialNumber = serialNumber;
+  this.manufacturer = manufacturer;
+  this.meterType = meterType;
+  this.currentInstallation.id = id;
+  this.currentInstallation.href = href;
+}
 
-const user = new Schema({
-  username: {
-    type: String,
-    required: true,
-    length: { min: 3, max: 32 },
-  },
-  pets: [
-    {
-      name: {
-        type: String,
-        required: true,
-      },
-      animal: {
-        type: String,
-        enum: ["cat", "dog", "cow"],
-      },
-    },
-  ],
-  address: {
-    street: {
-      type: String,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    zip: {
-      type: String,
-      match: /^[0-9]+$/,
-      required: true,
-    },
-  },
-});
-
-const errors = user.validate(obj);
-
-module.exports = mongoose.model("Sensor", sensorSchema);
+module.exports = MeterModel;
+//const errors = user.validate(obj);

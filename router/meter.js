@@ -5,11 +5,21 @@ require("dotenv").config();
 const auth = require("../middleware/auth");
 
 // config for your database
+// const Config = {
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   server: process.env.DB_SERVER,
+//   database: process.env.DB_SQL,
+//   // options: {
+//   //   encrypt: true,
+//   //   enableArithAbort: true,
+//   // },
+// };
 const Config = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  server: process.env.DB_SERVER,
-  database: process.env.DB_SQL,
+  user: "sa",
+  password: "mindmill",
+  server: "114.69.249.205\\sql2017",
+  database: "READyManagerDB",
   options: {
     encrypt: true,
     enableArithAbort: true,
@@ -26,15 +36,18 @@ router.get("/:id", auth, function (req, res) {
       const recordset = await request
         .input("ID", sql.VarChar(50), req.params.id)
         .execute(procedureName);
+
+      let parsedJson = JSON.parse(JSON.stringify(recordset));
+
       let meterDataToSend = new Meter(
-        recordset[0].ID,
-        recordset[0].Href,
-        recordset[0].SerialNumber,
-        recordset[0].Manufacture,
-        recordset[0].MeterType
+        parsedJson.recordset[0].ID,
+        parsedJson.recordset[0].Href,
+        parsedJson.recordset[0].SerialNumber,
+        parsedJson.recordset[0].Manufacturer,
+        parsedJson.recordset[0].MeterType
       );
 
-      res.json({ meterDataToSend });
+      res.json(meterDataToSend);
     } catch (error) {
       console.log(error);
     }

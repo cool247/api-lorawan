@@ -8,6 +8,10 @@ const Config = {
   password: "mindmill",
   server: "114.69.249.205\\sql2017",
   database: "READyManagerDB",
+  options: {
+    encrypt: true,
+    enableArithAbort: true,
+  },
 };
 
 //route

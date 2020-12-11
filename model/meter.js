@@ -11,8 +11,10 @@ function MeterModel(
   this.serialNumber = serialNumber;
   this.manufacturer = manufacturer;
   this.meterType = meterType;
-  this.currentInstallation.id = id;
-  this.currentInstallation.href = href;
+  this.currentInstallation = {
+    id: id,
+    href: href,
+  };
 }
 
 module.exports = MeterModel;

@@ -12,15 +12,26 @@ app.use(express.json());
 const PORT = 5000;
 // config for your database
 const Config = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  server: process.env.DB_SERVER,
-  database: process.env.DB_SQL,
+  user: "sa",
+  password: "mindmill",
+  server: "114.69.249.205\\sql2017",
+  database: "READyManagerDB",
   options: {
     encrypt: true,
     enableArithAbort: true,
   },
 };
+
+// const Config = {
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   server: process.env.DB_SERVER,
+//   database: process.env.DB_SQL,
+//   options: {
+//     encrypt: true,
+//     enableArithAbort: true,
+//   },
+// };
 
 app.post("/login", (req, res) => {
   // Read username and password from request header
